@@ -28,7 +28,6 @@ export class Grid {
   }
   createCells(): void {
     let cellList = [];
-    console.log(this.axeYLength * this.axeXLength);
     for (let i = 0; i < this.axeYLength; ++i) {
         for (let j = 0; j < this.axeXLength; ++j) {
           let coordinate = new Coordinate(j, i);
@@ -37,6 +36,7 @@ export class Grid {
           this.cellList = cellList;
         }
       }
+    this.detectAdjacentCell();
   }
 
   detectAdjacentCell(): void {
