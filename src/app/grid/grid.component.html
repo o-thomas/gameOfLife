@@ -1,5 +1,7 @@
+<input type = "button" style = "margin:auto" (click)="play()"  value = "test">
+<input type = "button" style = "margin:auto" (click) = "stop()"  value = "stop">
 <div id="container" class = "container">
-  <div *ngFor="let cell of cells" class = "cell" [ngStyle]="defineDimenssionCells()" >
+  <div *ngFor="let cell of cells" class = "cell" [ngClass]="{'alive':cell.getAlive() === true}" [ngStyle]='styleCell' (click) = tata(cell)>
   </div>
 
 </div>

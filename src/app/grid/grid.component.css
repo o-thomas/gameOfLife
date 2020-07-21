@@ -1,5 +1,14 @@
+.container{
+  width: 1000px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .cell{
-  display: inline-block;
-  border: solid;
-  border-width: 1px;
+  display: flex;
+  box-shadow: 1px 0px 1px 0px black;
+}
+
+.alive{
+  background-color: black;
 }

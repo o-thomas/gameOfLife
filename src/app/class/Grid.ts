@@ -41,7 +41,7 @@ export class Grid {
 
   detectAdjacentCell(): void {
     for (let cell of this.cellList) {
-      let listCell: Array <Cell> = [];
+      let listCell: Array <boolean> = [];
       let coordinatesList: Array<Coordinate> = [];
       let x = cell.coordinate.x;
       let y = cell.coordinate.y;
@@ -56,11 +56,17 @@ export class Grid {
       for (let target of this.cellList){
         for (let coordinate of coordinatesList){
           if (target.coordinate.getX() === coordinate.x && target.coordinate.getY() === coordinate.y){
-            listCell.push(target);
+            listCell.push(target.getAlive());
           }
         }
       }
       cell.setAdjacentCells(listCell);
+    }
+  }
+
+  god(): void {
+    for (let cell of this.cellList) {
+    cell.deadOrAlive();
     }
   }
 }
