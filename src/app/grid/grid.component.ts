@@ -1,27 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {Grid} from '../class/Grid';
 import {Cell} from '../class/Cell';
+import {GridService} from '../services/grid.service';
 
 @Component({
-  selector: 'app-grid',
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.css']
 })
 export class GridComponent implements OnInit {
-  grid: Grid = new Grid(50, 50);
-  gridHeight: number = this.grid.getAxeXLength();
-  gridWidth: number = this.grid.getAxeYLength();
+  axeY: number;
+  inWork: boolean = false;
+  grid = new Grid(50, 50);
+  axeX: number;
+  gridHeight: number;
+  gridWidth: number;
   containerHeight: number;
   containerWidth: number;
+  generation: number = 0;
+  cellAlive: number = 0;
   interval: number;
   cells: Array<Cell>;
   styleCell = {
   };
-  constructor() { }
+  constructor(private service: GridService) { }
   ngOnInit(): void {
-    this.grid.createCells();
-    this.cells = this.grid.cellList;
-    this.defineDimenssionCells();
+    this.gridHeight = this.grid.getAxeXLength();
+    this.gridWidth = this.grid.getAxeYLength();
+    this.initGrid();
   }
   defineDimenssionCells(): void{
     this.containerWidth = document.getElementById('container').offsetWidth;
@@ -33,21 +38,41 @@ export class GridComponent implements OnInit {
     };
   }
   play(): void{
-   this.interval = window.setInterval(() => this.tarin(), 50);
+    this.service.loading = true;
+    this.interval = window.setInterval(() => this.initGame(), 200);
+  }
+  initGrid(): void{
+    this.grid.createCells();
+    this.cells = this.grid.cellList;
+    this.defineDimenssionCells();
   }
   stop(): void{
+    this.inWork = false;
     window.clearInterval(this.interval);
   }
-  tata(cell): void{
+  setAlive(cell): void{
     cell.setAlive(!cell.getAlive());
     this.grid.detectAdjacentCell();
   }
-  tarin(): void{
-    this.grid.god();
+  initGame(): void{
+    this.generation = this.generation + 1;
+    console.log(this.grid);
+    this.grid.initGame();
+    this.cellAlive = this.grid.howCellAlive();
     this.grid.detectAdjacentCell();
+    if(this.cellAlive === 0) {
+      this.stop();
+    }
+    }
+  clearGrid(): void{
+    stop();
+    this.grid.clearGrid();
+    this.generation = 0;
   }
-
-/* formule a appliquer pour definir la taille des cellules: containerWidth / gridWidth et
-   containerheight / gridheight
- */
+  defineGridDimension(): void{
+    console.log(this.axeX);
+    this.grid.setAxeXLength(this.axeX);
+    this.grid.setAxeYLength(this.axeY);
+    this.initGrid();
+  }
 }

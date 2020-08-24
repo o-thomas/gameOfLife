@@ -1,0 +1,18 @@
+<div>
+  <input [disabled]="loading == true"  type = "button" style = "margin:auto" (click)="start()" value = "test">
+  <input type = "button" style = "margin:auto" (click) = "stop()"  value = "stop">
+  <input type = "button" style = "margin:auto" (click) = "clearGrid()"  value = "clear">
+</div>
+<div>
+  <form class ="form-group">
+    <label for="axeX"> longueur grille</label>
+    <input type = "number" class="form-control" name="axeX"  ngModel>
+    <label for="axeY"> largeur grille</label>
+    <input type = "number" class="form-control" name="axeY"  ngModel >
+    <label for="color"> Couleur de cellules</label>
+    <input type = "color" class="form-control" name="colorCell"  ngModel >
+  </form>
+</div>
+<div>
+  <input type="button" value="generer la grille" >
+</div>
