@@ -9,6 +9,8 @@
   box-shadow: 1px 0px 1px 0px black;
 }
 
-.alive{
-  background-color: black;
+.dead{
+  box-shadow: 1px 0px 1px 0px black;
+  background: none !important;
+
 }

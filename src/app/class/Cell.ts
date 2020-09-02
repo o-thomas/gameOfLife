@@ -4,6 +4,7 @@ export class Cell  {
   coordinate: Coordinate;
   alive: boolean;
   adjacentCells: Array<boolean>;
+  color: any = '#000000';
 
   constructor(coordinate: Coordinate, alive: boolean) {
     this.coordinate = coordinate;
@@ -14,6 +15,13 @@ export class Cell  {
   }
   setCoordinate(coordinate: Coordinate): void{
     this.coordinate = coordinate;
+  }
+
+  getColor(): number{
+    return this.color;
+  }
+  setColor(color: number): void{
+    this.color = color;
   }
   getAlive(): boolean{
     return this.alive;

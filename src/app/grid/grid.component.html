@@ -1,5 +1,5 @@
 {{this.axeX}}
-<app-grid-form (play) = "play()" (off)="stop()" (clear)="clearGrid()" loading="{{this.inWork}}"></app-grid-form>
+<app-grid-form (play) = "play()" (off)="stop()" (clear)="clearGrid()" (cellColor)="cellColor" (post)="saveGrid()" ></app-grid-form>
 <div id="grid">
   Génération numéro {{this.generation}}
 </div>
@@ -7,7 +7,7 @@
     Celules vivante {{this.cellAlive}}
   </div>
 <div id="container" class = "container">
-  <div *ngFor="let cell of cells" class = "cell" [ngClass]="{'alive':cell.getAlive() === true}" [ngStyle]='styleCell' (click) = setAlive(cell)>
+  <div *ngFor="let cell of cells" class = "cell" [ngClass]="{'dead':cell.getAlive() === false}" [ngStyle]="{'background-color':cell.color,'width':styleCell.width,'height':styleCell.width}" (click) = setAlive(cell)>
   </div>
 </div>
 

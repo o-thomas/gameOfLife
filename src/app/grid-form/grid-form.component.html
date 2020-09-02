@@ -1,18 +1,20 @@
 <div>
-  <input [disabled]="loading == true"  type = "button" style = "margin:auto" (click)="start()" value = "test">
+  <input   type = "button" style = "margin:auto" (click)="start()" value = "test">
   <input type = "button" style = "margin:auto" (click) = "stop()"  value = "stop">
   <input type = "button" style = "margin:auto" (click) = "clearGrid()"  value = "clear">
 </div>
 <div>
-  <form class ="form-group">
+  <form class ="form-group" [formGroup]="form">
     <label for="axeX"> longueur grille</label>
-    <input type = "number" class="form-control" name="axeX"  ngModel>
+    <input formControlName="axeX" (change)="sendValue()" type = "number" class="form-control" name="axeX">
     <label for="axeY"> largeur grille</label>
-    <input type = "number" class="form-control" name="axeY"  ngModel >
-    <label for="color"> Couleur de cellules</label>
-    <input type = "color" class="form-control" name="colorCell"  ngModel >
+    <input formControlName="axeY" (change)="sendValue()" type = "number" class="form-control" name="axeY">
+    <label  for="color"> Couleur de cellules</label>
+    <input formControlName="color" (change)="sendValue()" type = "color" class="form-control" name="cellColor">
+    <input (change)="pipetteMode == !pipetteMode" type = "button"  class="form-control" name="cellColor">
   </form>
 </div>
 <div>
-  <input type="button" value="generer la grille" >
+  <input type="button" value="génerer la grille" >
+  <input type="button" (click)="postGrid()" value="sauvegarder grille" >
 </div>

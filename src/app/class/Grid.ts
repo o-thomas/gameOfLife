@@ -1,15 +1,33 @@
 import { Cell } from './Cell';
 import { Coordinate } from './Coordinate';
 export class Grid {
+  name: string;
+  colorCell: number;
   axeYLength: number;
   axeXLength: number;
   generation: number;
   cellAlive: number;
   cellList: Array<Cell>;
 
-  constructor(axeYLength: number, axeXLength: number) {
+  constructor(name: string, axeYLength: number, axeXLength: number) {
     this.axeYLength = axeYLength;
     this.axeXLength = axeXLength;
+  }
+
+  getName(): string {
+    return this.name;
+  }
+
+  setName(name): void {
+    this.name = name;
+  }
+
+  getColorCell(): number {
+    return this.colorCell;
+  }
+
+  setColorCell(colorCell): void {
+    this.colorCell = colorCell;
   }
 
   getAxeYLength(): number {
