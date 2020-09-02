@@ -1,0 +1,14 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const gridSchema = new Schema({
+
+    name: String,
+    colorCell: Number,
+    axeYLength: Number,
+    axeXLength: Number,
+    generation: Number,
+    cellAlive: Number,
+    cellList: Array,
+
+})
+module.exports = mongoose.model('grid', gridSchema, 'grid') // (nom du model, nom du schema, nom de la collection de la bdd)

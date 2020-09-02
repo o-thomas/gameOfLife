@@ -1,0 +1,24 @@
+const express = require('express');
+const router = express.Router();
+const Grid = require('../models/grid');
+const mongoose = require('mongoose');
+const db = "mongodb://localhost:27017/gameoflife";
+const app = express();
+
+mongoose.connect(db, err => {
+    if (err) {
+        console.error('error' + err);
+    } else {
+        console.log('connected at mongoDb');
+    }
+})
+
+app.use('/static', express.static('./static'));
+
+app.get('/', (req, res) => {
+    res.send('from api route');
+})
+
+
+
+module.exports = router;
