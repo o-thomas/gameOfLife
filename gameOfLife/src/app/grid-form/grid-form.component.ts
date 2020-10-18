@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, Output, EventEmitter  } from '@angular/core';
 import {GridService} from '../services/grid.service';
-import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import {Grid} from '../class/Grid';
 
 
@@ -12,26 +12,35 @@ import {Grid} from '../class/Grid';
 export class GridFormComponent implements OnInit {
   grid: Grid;
   form: FormGroup;
+  name: string;
+
   pipetteMode: boolean = false;
+  grids: any;
   @Output() play = new EventEmitter<void>();
   @Output() clear = new EventEmitter<void>();
   @Output() off = new EventEmitter<void>();
   @Output() post = new EventEmitter<void>();
   @Output() cellColor = new EventEmitter<void>();
+  @Output() genGrid = new EventEmitter<void>();
 
-  constructor(private service: GridService) {
+  constructor(protected service: GridService, private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      axeX: new FormControl(
-        this.service.grid.axeXLength,
-      ),
-      axeY: new FormControl(
-        this.service.grid.axeYLength,
-      ),
-      color: new FormControl(
-        this.service.grid.colorCell)
+    this.getGrid();
+    this.grid = this.service.grid;
+    this.form = this.formBuilder.group({
+      name: [this.service.grid.name],
+      axeX: [this.service.grid.axeXLength],
+      axeY: [this.service.grid.axeYLength],
+      color: [this.service.grid.colorCell],
+      grids: [''],
+    });
+    this.form.get('name').valueChanges.subscribe(x => {
+      this.service.grid.setName(x);
+    });
+    this.form.get('grids').valueChanges.subscribe(x => {
+      this.service.settGrid(x);
     });
   }
 
@@ -49,6 +58,17 @@ export class GridFormComponent implements OnInit {
   }
   postGrid(): void{
     this.post.emit();
+  }
+  generateGrid(): void{
+    this.genGrid.emit();
+  }
+  getGrid(): void{
+    this.service.getGrid().subscribe(
+      res => {
+        this.grids = res;
+      },
+      err => console.log(err)
+    );
   }
 
 }

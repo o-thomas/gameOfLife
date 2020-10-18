@@ -3,16 +3,15 @@ const router = express.Router();
 const Grid = require('../models/grid');
 
 router.post('/grid', (req, res) => {
-
-    let gridData = req.headers.grid
-    console.log(req.headers.grid)
+    console.log(req.body)
+    let gridData = req.body
     let grid = new Grid(gridData)
     grid.save(gridData)
 })
 router.get('/grid', (req, res) => {
-    console.log("lala")
-    Grid.find({ name: req.headers.name }, function (err, result,next) {
+    Grid.find(function (err, result,next) {
         if(result){
+            console.log("ici")
             res.status(200).send(result)
         }else{
             res.status(200).send(err)

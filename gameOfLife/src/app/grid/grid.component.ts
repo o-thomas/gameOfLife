@@ -29,9 +29,9 @@ export class GridComponent implements OnInit {
     'background-color': ''
   };
 
-  constructor(private service: GridService) { }
+  constructor(protected service: GridService) { }
   ngOnInit(): void {
-    this.grid = this.service.grid;
+    this.initGrid()
     this.gridHeight = this.grid.getAxeXLength();
     this.gridWidth = this.grid.getAxeYLength();
     this.initGrid();
@@ -46,12 +46,20 @@ export class GridComponent implements OnInit {
 
   play(): void{
     this.service.loading = true;
-    this.interval = window.setInterval(() => this.initGame(), 200);
+    this.interval = window.setInterval(() => this.initGame(), 500);
+  }
+  loadGrid(): void{
+    console.log(this.grid)
+    this.grid = this.service.grid
+    this.cells = this.service.grid.cellList
   }
   initGrid(): void{
+    this.grid = this.service.grid;
     this.grid.createCells();
-    this.cells = this.grid.cellList;
+    this.cells = this.grid.getCellList();
     this.defineDimenssionCells();
+    console.log(this.grid);
+
   }
   stop(): void{
     this.inWork = false;
@@ -84,19 +92,18 @@ export class GridComponent implements OnInit {
     this.initGrid();
   }
   saveGrid(): any{
+    this.grid = this.service.grid
     this.service.saveGrid(this.grid).subscribe(
       res => {
         let response = res;
-        console.log(response);
       },
       err => {
-
         let r = err;
-        console.log(r)
       }
     );
-
-
+  }
+  test(): void{
+    this.grid = this.service.grid;
   }
 
 }

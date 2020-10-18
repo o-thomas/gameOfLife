@@ -12,6 +12,7 @@ export class Grid {
   constructor(name: string, axeYLength: number, axeXLength: number) {
     this.axeYLength = axeYLength;
     this.axeXLength = axeXLength;
+    this.name = name;
   }
 
   getName(): string {
@@ -66,8 +67,18 @@ export class Grid {
     return this.cellList;
   }
 
-  setCellList(cellList): void {
-    this.cellList = cellList;
+  setCellList(cellList: Array<Cell>): any {
+    let list = [];
+    for(let i = 0; i < cellList.length; ++i){
+      let x = cellList[i].coordinate.x;
+      let y = cellList[i].coordinate.y;
+      var coordinate = new Coordinate(x, y);
+      let cell = new Cell(coordinate, cellList[i].alive);
+      cell.setColor(cellList[i].color);
+      cell.setAdjacentCells(cellList[i].adjacentCells);
+      list.push(cell);
+    }
+    this.cellList = list;
   }
 
   createCells(): void {
@@ -117,10 +128,10 @@ export class Grid {
     this.generation = 0;
     for (let cell of this.cellList) {
       if(cell.alive){
-        this.generation++
+        this.generation++;
       }
     }
-    return this.generation
+    return this.generation;
     }
 
   clearGrid(): void {

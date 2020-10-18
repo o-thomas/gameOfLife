@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const gridSchema = new Schema({
 
     name: String,
-    colorCell: Number,
+    colorCell: String,
     axeYLength: Number,
     axeXLength: Number,
     generation: Number,

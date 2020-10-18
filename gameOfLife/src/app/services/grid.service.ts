@@ -10,7 +10,7 @@ import {Observable} from "rxjs";
 })
 export class GridService {
   loading: boolean = false;
-  grid = new Grid( 'newGrid', 50, 50);
+  grid = new Grid( 'bla', 50, 50);
   private saveGridUrl: 'http://localhost:3000/grid/grid';
 
   constructor(private http: HttpClient) { }
@@ -18,15 +18,32 @@ export class GridService {
   setValue(obj): void{
     if (obj.axeY){
       this.grid.setAxeYLength(obj.axeY);
-}
+    }
     if (obj.axeX){
       this.grid.setAxeXLength(obj.axeX);
     }
     if (obj.color){
-      this.grid.setColorCell(obj.color);    }
+      this.grid.setColorCell(obj.color);
+    }
   }
 
-  saveGrid(jojo){
-    return this.http.get(this.saveGridUrl);
+  setGrid(grid): void{
+    this.grid = grid;
+  }
+
+  saveGrid(grid): Observable<object>{
+    console.log(grid);
+    let header = new HttpHeaders({
+      'grid': grid
+    });
+    return this.http.post('http://localhost:3000/grid/grid',grid);
+  }
+
+  getGrid(): Observable<object>{
+    return this.http.get('http://localhost:3000/grid/grid');
+  }
+  settGrid(grid): void{
+    this.grid = new Grid(grid.name, grid.axeYLength, grid.axeXLength);
+    this.grid.setCellList(grid.cellList);
   }
 }

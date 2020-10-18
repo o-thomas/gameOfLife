@@ -12,9 +12,17 @@
     <label  for="color"> Couleur de cellules</label>
     <input formControlName="color" (change)="sendValue()" type = "color" class="form-control" name="cellColor">
     <input (change)="pipetteMode == !pipetteMode" type = "button"  class="form-control" name="cellColor">
+    <input  type = "text" class="form-control" formControlName="name" [ngModel]="grid.name" name="name">
+    <select formControlName="grids">
+      <option [ngValue] = "null" disabled> Choisissez votre profil </option>
+      <option *ngFor = "let grid of grids" [ngValue] = "grid">
+        {{grid.name}}
+      </option>
+    </select>
+
   </form>
 </div>
 <div>
-  <input type="button" value="génerer la grille" >
+  <input type="button" value="génerer la grille" (click)="generateGrid()" >
   <input type="button" (click)="postGrid()" value="sauvegarder grille" >
 </div>
