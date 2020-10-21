@@ -11,7 +11,7 @@
     <input formControlName="axeY" (change)="sendValue()" type = "number" class="form-control" name="axeY">
     <label  for="color"> Couleur de cellules</label>
     <input formControlName="color" (change)="sendValue()" type = "color" class="form-control" name="cellColor">
-    <input (change)="pipetteMode == !pipetteMode" type = "button"  class="form-control" name="cellColor">
+    <input (click)="pipette()" type = "button"  class="form-control" name="cellColor">
     <input  type = "text" class="form-control" formControlName="name" [ngModel]="grid.name" name="name">
     <select formControlName="grids">
       <option [ngValue] = "null" disabled> Choisissez votre profil </option>

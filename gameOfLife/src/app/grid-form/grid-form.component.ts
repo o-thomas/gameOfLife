@@ -13,15 +13,15 @@ export class GridFormComponent implements OnInit {
   grid: Grid;
   form: FormGroup;
   name: string;
-
-  pipetteMode: boolean = false;
   grids: any;
+
   @Output() play = new EventEmitter<void>();
   @Output() clear = new EventEmitter<void>();
   @Output() off = new EventEmitter<void>();
   @Output() post = new EventEmitter<void>();
   @Output() cellColor = new EventEmitter<void>();
   @Output() genGrid = new EventEmitter<void>();
+  @Output() pipetteMode = new EventEmitter<void>();
 
   constructor(protected service: GridService, private formBuilder: FormBuilder) {
   }
@@ -62,6 +62,10 @@ export class GridFormComponent implements OnInit {
   generateGrid(): void{
     this.genGrid.emit();
   }
+  pipette(): void{
+    this.pipetteMode.emit();
+  }
+
   getGrid(): void{
     this.service.getGrid().subscribe(
       res => {

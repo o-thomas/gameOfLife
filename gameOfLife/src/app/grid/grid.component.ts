@@ -21,7 +21,7 @@ export class GridComponent implements OnInit {
   cellAlive: number = 0;
   interval: number;
   cells: Array<Cell>;
-  pipetteMod: boolean = false;
+  pipetteMode: boolean = false;
   cellColor: number;
   styleCell = {
     width: '',
@@ -46,12 +46,14 @@ export class GridComponent implements OnInit {
 
   play(): void{
     this.service.loading = true;
-    this.interval = window.setInterval(() => this.initGame(), 500);
+    this.interval = window.setInterval(() => this.initGame(), 100);
   }
   loadGrid(): void{
-    console.log(this.grid)
     this.grid = this.service.grid
-    this.cells = this.service.grid.cellList
+    this.cells = this.service.grid.cellList;
+  }
+  pipetteEnlabled(): void{
+    this.pipetteMode = true;
   }
   initGrid(): void{
     this.grid = this.service.grid;
@@ -67,10 +69,20 @@ export class GridComponent implements OnInit {
     console.log(this.grid.colorCell);
     console.log(this.service.grid.colorCell);
   }
+  getColor(color): void {
+    console.log(color);
+    this.grid.colorCell = color;
+    this.pipetteMode = false;
+  }
   setAlive(cell): void{
-    cell.setAlive(!cell.getAlive());
-    cell.setColor(this.grid.colorCell);
-    this.grid.detectAdjacentCell();
+    console.log(this.pipetteMode)
+    if (!this.pipetteMode){
+      cell.setAlive(!cell.getAlive());
+      cell.setColor(this.grid.colorCell);
+      this.grid.detectAdjacentCell();
+    }else{
+      this.getColor(cell.color);
+    }
   }
   initGame(): void{
     this.generation = this.generation + 1;
@@ -102,8 +114,4 @@ export class GridComponent implements OnInit {
       }
     );
   }
-  test(): void{
-    this.grid = this.service.grid;
-  }
-
 }
