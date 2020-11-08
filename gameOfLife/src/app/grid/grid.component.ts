@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {Grid} from '../class/Grid';
 import {Cell} from '../class/Cell';
+import {Color} from '../class/Color';
 import {GridService} from '../services/grid.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class GridComponent implements OnInit {
   interval: number;
   cells: Array<Cell>;
   pipetteMode: boolean = false;
+  engineOn: boolean;
   cellColor: number;
   styleCell = {
     width: '',
@@ -31,7 +33,7 @@ export class GridComponent implements OnInit {
 
   constructor(protected service: GridService) { }
   ngOnInit(): void {
-    this.initGrid()
+    this.initGrid();
     this.gridHeight = this.grid.getAxeXLength();
     this.gridWidth = this.grid.getAxeYLength();
     this.initGrid();
@@ -49,7 +51,7 @@ export class GridComponent implements OnInit {
     this.interval = window.setInterval(() => this.initGame(), 100);
   }
   loadGrid(): void{
-    this.grid = this.service.grid
+    this.grid = this.service.grid;
     this.cells = this.service.grid.cellList;
   }
   pipetteEnlabled(): void{
@@ -60,26 +62,22 @@ export class GridComponent implements OnInit {
     this.grid.createCells();
     this.cells = this.grid.getCellList();
     this.defineDimenssionCells();
-    console.log(this.grid);
 
   }
   stop(): void{
-    this.inWork = false;
+    this.service.loading = false;
     window.clearInterval(this.interval);
-    console.log(this.grid.colorCell);
-    console.log(this.service.grid.colorCell);
   }
   getColor(color): void {
-    console.log(color);
-    this.grid.colorCell = color;
+    this.grid.setColorCell(color);
     this.pipetteMode = false;
   }
   setAlive(cell): void{
-    console.log(this.pipetteMode)
     if (!this.pipetteMode){
       cell.setAlive(!cell.getAlive());
       cell.setColor(this.grid.colorCell);
       this.grid.detectAdjacentCell();
+
     }else{
       this.getColor(cell.color);
     }
@@ -88,8 +86,7 @@ export class GridComponent implements OnInit {
     this.generation = this.generation + 1;
     this.grid.initGame();
     this.cellAlive = this.grid.howCellAlive();
-    this.grid.detectAdjacentCell();
-    if(this.cellAlive === 0) {
+    if (this.cellAlive === 0) {
       this.stop();
     }
     }
@@ -104,7 +101,7 @@ export class GridComponent implements OnInit {
     this.initGrid();
   }
   saveGrid(): any{
-    this.grid = this.service.grid
+    this.grid = this.service.grid;
     this.service.saveGrid(this.grid).subscribe(
       res => {
         let response = res;

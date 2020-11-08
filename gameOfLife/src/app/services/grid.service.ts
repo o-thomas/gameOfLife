@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Grid} from '../class/Grid';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs';
 
 
 
@@ -32,11 +32,10 @@ export class GridService {
   }
 
   saveGrid(grid): Observable<object>{
-    console.log(grid);
     let header = new HttpHeaders({
       'grid': grid
     });
-    return this.http.post('http://localhost:3000/grid/grid',grid);
+    return this.http.post('http://localhost:3000/grid/grid', grid);
   }
 
   getGrid(): Observable<object>{

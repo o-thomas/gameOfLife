@@ -2,7 +2,7 @@ import { Cell } from './Cell';
 import { Coordinate } from './Coordinate';
 export class Grid {
   name: string;
-  colorCell: number;
+  colorCell: any = '#F31212';
   axeYLength: number;
   axeXLength: number;
   generation: number;
@@ -69,10 +69,10 @@ export class Grid {
 
   setCellList(cellList: Array<Cell>): any {
     let list = [];
-    for(let i = 0; i < cellList.length; ++i){
+    for (let i = 0; i < cellList.length; ++i){
       let x = cellList[i].coordinate.x;
       let y = cellList[i].coordinate.y;
-      var coordinate = new Coordinate(x, y);
+      let coordinate = new Coordinate(x, y);
       let cell = new Cell(coordinate, cellList[i].alive);
       cell.setColor(cellList[i].color);
       cell.setAdjacentCells(cellList[i].adjacentCells);
@@ -97,6 +97,7 @@ export class Grid {
   detectAdjacentCell(): void {
     for (let cell of this.cellList) {
       let listCell: Array<boolean> = [];
+      let colorCell: Array<any> = [];
       let coordinatesList: Array<Coordinate> = [];
       let x = cell.coordinate.x;
       let y = cell.coordinate.y;
@@ -112,14 +113,19 @@ export class Grid {
         for (let coordinate of coordinatesList) {
           if (target.coordinate.getX() === coordinate.x && target.coordinate.getY() === coordinate.y) {
             listCell.push(target.getAlive());
+            if (target.getAlive() === true){
+              colorCell.push(target.getColor());
+            }
           }
         }
       }
       cell.setAdjacentCells(listCell);
+      cell.setAdjacentColor(colorCell);
     }
   }
 
   initGame(): void {
+    this.detectAdjacentCell();
     for (let cell of this.cellList) {
       cell.deadOrAlive();
     }
@@ -127,7 +133,7 @@ export class Grid {
   howCellAlive(): number{
     this.generation = 0;
     for (let cell of this.cellList) {
-      if(cell.alive){
+      if (cell.alive){
         this.generation++;
       }
     }
