@@ -91,7 +91,7 @@ export class GridComponent implements OnInit {
     }
     }
   clearGrid(): void{
-    stop();
+    this.stop();
     this.grid.clearGrid();
     this.generation = 0;
   }
