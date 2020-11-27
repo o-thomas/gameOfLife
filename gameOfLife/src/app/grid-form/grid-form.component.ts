@@ -23,7 +23,7 @@ export class GridFormComponent implements OnInit {
   @Output() genGrid = new EventEmitter<void>();
   @Output() pipetteMode = new EventEmitter<void>();
 
-  constructor(protected service: GridService, private formBuilder: FormBuilder) {
+  constructor(public service: GridService, private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
